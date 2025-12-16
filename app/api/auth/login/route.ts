@@ -18,6 +18,12 @@ export async function POST(req: Request) {
     if (!user) {
       return NextResponse.json({ message: "کاربر یافت نشد" }, { status: 404 });
     }
+    if (!user.password) {
+      return NextResponse.json(
+        { message: "این کاربر رمز عبور ندارد" },
+        { status: 400 }
+      );
+    }
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid) {
       return NextResponse.json(
