@@ -4,9 +4,18 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { useQuery } from "@tanstack/react-query";
 
 const COLORS = ["#0088FE", "#00C49F"];
-
-export default function UserPieChart() {
-  const { data, isLoading, isError } = useQuery({
+type UserPieChartProps = {
+  data: {
+    thisMonth: number;
+    lastMonth: number;
+  };
+};
+export default function UserPieChart({ data }: UserPieChartProps) {
+  const {
+    data: stats,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["userStats"],
     queryFn: async () => {
       const res = await fetch("/api/users/stats");
@@ -16,11 +25,11 @@ export default function UserPieChart() {
   });
 
   if (isLoading) return <p>در حال بارگذاری نمودار...</p>;
-  if (isError || !data) return <p>خطا در بارگذاری نمودار</p>;
+  if (isError || !stats) return <p>خطا در بارگذاری نمودار</p>;
 
   const chartData = [
-    { name: "ماه گذشته", value: data.lastMonth },
-    { name: "این ماه", value: data.thisMonth },
+    { name: "ماه گذشته", value: stats.lastMonth },
+    { name: "این ماه", value: stats.thisMonth },
   ];
 
   return (
