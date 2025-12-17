@@ -40,7 +40,6 @@ export default function UsersPage() {
   const { data, isLoading, isError, isFetching } = useQuery({
     queryKey: ["users", page, debouncedQ, sort],
     queryFn: () => fetchUsers({ page, limit, q: debouncedQ, sort }),
-    keepPreviousData: true,
     staleTime: 1000 * 30,
   });
 
