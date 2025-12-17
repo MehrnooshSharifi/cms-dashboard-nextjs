@@ -4,13 +4,8 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { useQuery } from "@tanstack/react-query";
 
 const COLORS = ["#0088FE", "#00C49F"];
-type UserPieChartProps = {
-  data: {
-    thisMonth: number;
-    lastMonth: number;
-  };
-};
-export default function UserPieChart({ data }: UserPieChartProps) {
+
+export default function UserPieChart() {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["userStats"],
     queryFn: async () => {
